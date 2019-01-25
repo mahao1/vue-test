@@ -5,7 +5,7 @@
         <div class="todolist">
           <div class="todo">
             <h2 class="title">todolist</h2>
-            <el-input type="text" v-model="ipt"></el-input>
+            <el-input type="text" v-model="todo" @keyup.enter.native="add"></el-input>
             <el-button type="primary" @click="add">添加</el-button>
           </div>
 
@@ -13,18 +13,18 @@
             <div class="processing">
               <h2 class="title">进行任务<span class="red">{{list.length}}</span>个</h2>
               <ul class="task-ul">
-                <li v-for="(item, index) in list">
-                  <el-checkbox :label="index" @change="checkboxChange(item)">{{item}}</el-checkbox>
+                <li v-for="(item, index) in list" v-if="!item.checked">
+                  <el-checkbox :label="index" v-model="item.checked" @change="saveList">{{item.title}}</el-checkbox>
                   <i class="el-icon-delete" @click="removeItem(index)"></i>
                 </li>
               </ul>
             </div>
             <div class="done">
-              <h2 class="title">已完成<span class="red">{{doneList.length}}</span>个</h2>
+              <h2 class="title">已完成<span class="red">{{list.length}}</span>个</h2>
               <ul class="task-ul">
-                <li v-for="(item, index) in doneList">
-                  <span>{{item}}</span>
-                  <i class="el-icon-delete" @click="removeDone(index)"></i>
+                <li v-for="(item, index) in list" v-if="item.checked">
+                  <el-checkbox :label="index" v-model="item.checked" @change="saveList">{{item.title}}</el-checkbox>
+                  <i class="el-icon-delete" @click="removeItem(index)"></i>
                 </li>
               </ul>
             </div>
@@ -36,39 +36,41 @@
 </template>
 
 <script>
+  import storage from '../model/storage'
+  console.log(storage);
   export default {
     name: "todoList",
     data(){
       return {
-        ipt: '',
+        todo: '',
         list: [],//进行中列表
-        doneList: [],//完成列表
-        checked: false,
-        flag: false,
       }
     },
     methods: {
       //添加
-      add(){
-        this.list.push(this.ipt);
-        this.ipt = '';
+      add() {
+        this.list.push({
+          title: this.todo,
+          checked: false
+        });
+        this.todo = '';
+
+        storage.set('list', this.list);
       },
       //进行任务删除
-      removeItem(index){
-        console.log(index);
+      removeItem(index) {
+        console.log('删除', index);
         this.list.splice(index, 1);
+        storage.set('list', this.list);
       },
-      //进行任务选择
-      checkboxChange(val){
-        console.log('选择了', val);
-        this.flag = true;
-        this.list.splice(val, 1);
-        this.doneList.push(val);
+      saveList(){
+        storage.set('list', this.list);
       },
-      //完成任务移除
-      removeDone(index){
-        console.log('完成', index);
-        this.doneList.splice(index, 1);
+    },
+    mounted(){
+      let list = storage.get('list');
+      if(list){//判断list是否存在
+        this.list = list;
       }
     }
   }
