@@ -44,20 +44,24 @@
       }
     },
     methods: {
+      //添加
       add(){
         this.list.push(this.ipt);
         this.ipt = '';
       },
+      //进行任务删除
       removeItem(index){
         console.log(index);
         this.list.splice(index, 1);
       },
+      //进行任务选择
       checkboxChange(val){
         console.log('选择了', val);
         this.flag = true;
         this.list.splice(val, 1);
         this.doneList.push(val);
       },
+      //完成任务移除
       removeDone(index){
         console.log('完成', index);
         this.doneList.splice(index, 1);
