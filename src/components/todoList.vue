@@ -1,30 +1,34 @@
 <template>
   <div id="todoList">
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col :span="12">
-        <div class="todo">
-          <h2 class="title">todolist</h2>
-          <el-input type="text" v-model="ipt"></el-input>
-          <el-button type="primary" @click="add">添加</el-button>
-        </div>
+      <el-col :span="24">
+        <div class="todolist">
+          <div class="todo">
+            <h2 class="title">todolist</h2>
+            <el-input type="text" v-model="ipt"></el-input>
+            <el-button type="primary" @click="add">添加</el-button>
+          </div>
 
-        <div class="processing">
-          <h2 class="title">进行任务<span class="red">{{list.length}}</span>个</h2>
-          <ul class="task-ul">
-            <li v-for="(item, index) in list">
-              <el-checkbox :label="index" @change="checkboxChange(item)">{{item}}</el-checkbox>
-              <i class="el-icon-delete" @click="removeItem(index)"></i>
-            </li>
-          </ul>
-        </div>
-        <div class="done">
-          <h2 class="title">已完成<span class="red">{{doneList.length}}</span>个</h2>
-          <ul class="task-ul">
-            <li v-for="(item, index) in doneList">
-              <span>{{item}}</span>
-              <i class="el-icon-delete" @click="removeDone(index)"></i>
-            </li>
-          </ul>
+          <div class="todo-main">
+            <div class="processing">
+              <h2 class="title">进行任务<span class="red">{{list.length}}</span>个</h2>
+              <ul class="task-ul">
+                <li v-for="(item, index) in list">
+                  <el-checkbox :label="index" @change="checkboxChange(item)">{{item}}</el-checkbox>
+                  <i class="el-icon-delete" @click="removeItem(index)"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="done">
+              <h2 class="title">已完成<span class="red">{{doneList.length}}</span>个</h2>
+              <ul class="task-ul">
+                <li v-for="(item, index) in doneList">
+                  <span>{{item}}</span>
+                  <i class="el-icon-delete" @click="removeDone(index)"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -71,6 +75,10 @@
 </script>
 
 <style scoped>
+  .todolist{
+    width: 1200px;
+    margin: 0 auto;
+  }
   .todo{
     width: 100%;
     background: #666;
@@ -84,11 +92,13 @@
   .todo .el-input{
     width: 50%;
   }
+  .todo-main{
+    background: #ddd;
+    padding: 10px;
+  }
   .processing,
   .done{
     margin-top: 10px;
-    background: #eee;
-    padding: 10px;
   }
   .task-ul{
     width: 50%;
