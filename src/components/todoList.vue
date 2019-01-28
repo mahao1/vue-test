@@ -11,7 +11,7 @@
 
           <div class="todo-main">
             <div class="processing">
-              <h2 class="title">进行任务<span class="red">{{list.length}}</span>个</h2>
+              <h2 class="title">进行任务<span class="red">{{list.length - count}}</span>个</h2>
               <ul class="task-ul">
                 <li v-for="(item, index) in list" v-if="!item.checked">
                   <el-checkbox :label="index" v-model="item.checked" @change="saveList">{{item.title}}</el-checkbox>
@@ -20,7 +20,7 @@
               </ul>
             </div>
             <div class="done">
-              <h2 class="title">已完成<span class="red">{{list.length}}</span>个</h2>
+              <h2 class="title">已完成<span class="red">{{count}}</span>个</h2>
               <ul class="task-ul">
                 <li v-for="(item, index) in list" v-if="item.checked">
                   <el-checkbox :label="index" v-model="item.checked" @change="saveList">{{item.title}}</el-checkbox>
@@ -37,13 +37,15 @@
 
 <script>
   import storage from '../model/storage'
-  console.log(storage);
   export default {
     name: "todoList",
     data(){
       return {
         todo: '',
         list: [],//进行中列表
+        proArr: [],
+        doneArr: [],
+        count: 0,
       }
     },
     methods: {
@@ -54,23 +56,41 @@
           checked: false
         });
         this.todo = '';
-
         storage.set('list', this.list);
       },
       //进行任务删除
       removeItem(index) {
         console.log('删除', index);
         this.list.splice(index, 1);
+        this.common();
         storage.set('list', this.list);
+        storage.set('count', this.count);
       },
+      //任务状态改变
       saveList(){
+        this.common();
         storage.set('list', this.list);
+        storage.set('count', this.count);
+      },
+      common(){
+        let count = 0;
+        this.list.forEach(value => {
+          if(value.checked == true){
+            count++;
+          }
+        });
+        this.count = count;
+        console.log(`完成任务数量${this.count},进行任务数量${this.list.length - this.count},`);
       },
     },
     mounted(){
       let list = storage.get('list');
       if(list){//判断list是否存在
         this.list = list;
+      }
+      let count = storage.get('count');
+      if(count){//判断list是否存在
+        this.count = count;
       }
     }
   }
