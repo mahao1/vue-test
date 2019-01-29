@@ -1,14 +1,19 @@
 <template>
   <div id="index">
-    <v-header></v-header>
+
     <todoList></todoList>
+    <br>
+    <hr>
+    <br>
+    <Home></Home>
 
   </div>
 </template>
 
 <script>
   import todoList from '@/components/todoList'
-  import Header from '@/components/Header.vue'
+
+  import Home from '../../components/Home'
   export default {
     name: "index",
     data(){
@@ -18,7 +23,7 @@
     },
     components: {
       todoList,
-      'v-header': Header
+      Home
     }
   }
 </script>
