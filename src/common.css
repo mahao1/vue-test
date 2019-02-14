@@ -23,3 +23,15 @@ input, select{
   width: 1200px;
   margin: 0 auto;
 }
+.title{
+  color: #149688;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.sub-title{
+  font-size: 16px;
+  font-weight: bold;
+  color: #149688;
+  margin-bottom: 10px;
+}

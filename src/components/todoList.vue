@@ -6,7 +6,7 @@
           <div class="todo">
             <h2 class="title">todolist</h2>
             <el-input type="text" v-model="todo" @keyup.enter.native="add"></el-input>
-            <el-button type="primary" @click="add">添加</el-button>
+            <el-button type="warning" @click="add">添加</el-button>
           </div>
 
           <div class="todo-main">
@@ -98,12 +98,12 @@
 
 <style scoped>
   .todolist{
-    width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 20px;
   }
   .todo{
     width: 100%;
-    background: #666;
+    background: #51b3a9;
     padding: 10px;
   }
   .title{
@@ -115,7 +115,7 @@
     width: 50%;
   }
   .todo-main{
-    background: #ddd;
+    background: #89b9d8;
     padding: 10px;
   }
   .processing,

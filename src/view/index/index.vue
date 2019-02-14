@@ -1,10 +1,7 @@
 <template>
-  <div id="index">
+  <div id="index" class="layout">
 
     <todoList></todoList>
-    <br>
-    <hr>
-    <br>
     <Home></Home>
 
   </div>
