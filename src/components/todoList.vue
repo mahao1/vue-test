@@ -115,7 +115,7 @@
     width: 50%;
   }
   .todo-main{
-    background: #89b9d8;
+    background: #bbdbab;
     padding: 10px;
   }
   .processing,
